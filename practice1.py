@@ -10,6 +10,7 @@ height = 0
 show_ratio = 1.0
 title_name = 'Custom Yolo'
 
+
 # Load Yolo
 net = cv2.dnn.readNet("model/custom-train-yolo_final.weights", "model/custom-train-yolo.cfg")
 
@@ -22,12 +23,13 @@ layer_names = net.getLayerNames()
 output_layers = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
 
 
-file_name = "image/10.JPG"
+file_name = "image/18.1.JPG"
 encoding_file = 'encodings.pickle1'
 unknown_name = 'Unknown'
+name3 = 'song'
 # Either cnn  or hog. The CNN method is more accurate but slower. HOG is faster but less accurate.
 model_method = 'cnn'
-output_name = 'video/output_' + model_method + '3' +'.avi'
+output_name = 'video/output_' + model_method + '4' +'.avi'
 
 def detectAndDisplay(image):
     
@@ -138,9 +140,14 @@ def detectAndDisplay(image):
             2, color, line)
 
 
+        if(class_id == 0 and name == 'song'):
+            cv2.putText(image, 'Certified person', (10, height - ((1 * 20) + 20)),
+            cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+        else:
+            cv2.putText(image, 'i dont know', (10, height - ((2 * 20) + 20)),
+            cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+
     
-    cv2.putText(image, 'Certified person', (10, height - ((1 * 20) + 20)),
-    cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
 
                 
     end_time = time.time()
@@ -168,7 +175,7 @@ def detectAndDisplay(image):
 data = pickle.loads(open(encoding_file, "rb").read())
 
 #-- 2. Read the video stream
-cap = cv2.VideoCapture(file_name)
+cap = cv2.VideoCapture(0)
 writer = None
 if not cap.isOpened:
     print('--(!)Error opening video capture')

@@ -6,14 +6,14 @@ min_confidence = 0.7
 # Load Yolo
 net = cv2.dnn.readNet("model/custom-train-yolo_final.weights", "model/custom-train-yolo.cfg")
 
-with open("model/classes.names", "r") as f:
+with open("certificate_dataset/classes.names", "r") as f:
     classes = [line.strip() for line in f.readlines()]
 layer_names = net.getLayerNames()
 output_layers = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
 colors = np.random.uniform(0, 255, size=(len(classes), 3))
 
 # Loading image
-img = cv2.imread("image/1.jpg")
+img = cv2.imread("./image/17.JPG")
 img = cv2.resize(img, None, fx=0.4, fy=0.4)
 height, width, channels = img.shape
 cv2.imshow("Original Image", img)
