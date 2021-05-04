@@ -23,13 +23,13 @@ layer_names = net.getLayerNames()
 output_layers = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
 
 
-file_name = "image/18.1.JPG"
+file_name = "image/11.1.JPG"
 encoding_file = 'encodings.pickle1'
 unknown_name = 'Unknown'
 name3 = 'song'
 # Either cnn  or hog. The CNN method is more accurate but slower. HOG is faster but less accurate.
 model_method = 'cnn'
-output_name = 'video/output_' + model_method + '4' +'.avi'
+output_name = 'video/output_' + model_method + '3' +'.avi'
 
 def detectAndDisplay(image):
     
@@ -75,6 +75,7 @@ def detectAndDisplay(image):
         if i in indexes:
             x, y, w, h = boxes[i]
             label = '{} {:,.2%}'.format(names[i], confidences[i])
+            label1 = '{}'.format(names[i])
             color = colors[i]
             print(i, label, x, y, w, h)
             cv2.rectangle(image, (x, y), (x + w, y + h), color, 2)
@@ -140,9 +141,10 @@ def detectAndDisplay(image):
             2, color, line)
 
 
-        if(class_id == 0 and name == 'song'):
+        if(label1 == 'certificate_kim' and name == 'wang'):
             cv2.putText(image, 'Certified person', (10, height - ((1 * 20) + 20)),
             cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+            
         else:
             cv2.putText(image, 'i dont know', (10, height - ((2 * 20) + 20)),
             cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
@@ -175,7 +177,7 @@ def detectAndDisplay(image):
 data = pickle.loads(open(encoding_file, "rb").read())
 
 #-- 2. Read the video stream
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(file_name)
 writer = None
 if not cap.isOpened:
     print('--(!)Error opening video capture')
