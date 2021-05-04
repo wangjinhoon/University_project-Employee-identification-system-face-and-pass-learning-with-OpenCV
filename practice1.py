@@ -22,7 +22,7 @@ layer_names = net.getLayerNames()
 output_layers = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
 
 
-file_name = '10.JPG'
+file_name = "image/10.JPG"
 encoding_file = 'encodings.pickle1'
 unknown_name = 'Unknown'
 # Either cnn  or hog. The CNN method is more accurate but slower. HOG is faster but less accurate.
@@ -48,7 +48,7 @@ def detectAndDisplay(image):
     boxes = []
     colors = []
 
-    for out in outs:
+    for out in outs:#식별한걸 하나하나 가져와 돌림
         for detection in out:
             scores = detection[5:]
             class_id = np.argmax(scores)
@@ -78,8 +78,7 @@ def detectAndDisplay(image):
             cv2.rectangle(image, (x, y), (x + w, y + h), color, 2)
             cv2.putText(image, label, (x, y - 10), font, 1, color, 2)
 
-
-
+    ####################################################################
 
     # detect the (x, y)-coordinates of the bounding boxes corresponding
     # to each face in the input image, then compute the facial embeddings
@@ -138,6 +137,11 @@ def detectAndDisplay(image):
         cv2.putText(image, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
             2, color, line)
 
+
+    
+    cv2.putText(image, 'Certified person', (10, height - ((1 * 20) + 20)),
+    cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+
                 
     end_time = time.time()
     process_time = end_time - start_time
@@ -145,6 +149,7 @@ def detectAndDisplay(image):
     # show the output image
     image = cv2.resize(image, None, fx=0.5, fy=0.5)
     cv2.imshow("Recognition", image)
+
     
     # if the video writer is None *AND* we are supposed to write
     # the output video to disk initialize the writer
@@ -158,12 +163,12 @@ def detectAndDisplay(image):
     # faces to disk
     if writer is not None:
         writer.write(image)
-        
+##########################################################3        
 # load the known faces and embeddings
 data = pickle.loads(open(encoding_file, "rb").read())
 
 #-- 2. Read the video stream
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(file_name)
 writer = None
 if not cap.isOpened:
     print('--(!)Error opening video capture')
