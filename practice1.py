@@ -10,7 +10,7 @@ height = 0
 show_ratio = 1.0
 title_name = 'Custom Yolo'
 
-
+###############
 # Load Yolo
 net = cv2.dnn.readNet("model/custom-train-yolo_final.weights", "model/custom-train-yolo.cfg")
 
