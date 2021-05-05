@@ -2,9 +2,9 @@ import cv2
 import face_recognition
 import pickle
 
-dataset_paths = ['./dataset/jang-align/','./dataset/kim-align/','./dataset/song-align/','./dataset/tedy-align/','./dataset/unknown-align/','./dataset/wang-align/']
-names = ['jang','kim','song','tedy','unknown','wang']
-number_images = 10#이미지 갯수
+dataset_paths = ['./dataset/jang-align/','./dataset/kim-align/','./dataset/song-align/','./dataset/unknown-align/','./dataset/wang-align/','./dataset/c_song-align/','./dataset/c_wang-align/']
+names = ['jang','kim','song','unknown','wang','c_song','c_wang']
+number_images = 20#이미지 갯수
 image_type = '.jpg'
 encoding_file = 'encodings.pickle1'#pickle을 이용해 만듬 
 # Either cnn  or hog. The CNN method is more accurate but slower. HOG is faster but less accurate.

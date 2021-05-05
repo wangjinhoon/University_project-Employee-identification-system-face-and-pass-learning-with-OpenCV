@@ -5,12 +5,12 @@ import pickle
 import time
 
 min_confidence = 0.77
-width = 800
+width = 1000
 height = 0
 show_ratio = 1.0
 title_name = 'Custom Yolo'
 
-###############
+
 # Load Yolo
 net = cv2.dnn.readNet("model/custom-train-yolo_final.weights", "model/custom-train-yolo.cfg")
 
@@ -23,13 +23,12 @@ layer_names = net.getLayerNames()
 output_layers = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
 
 
-file_name = "image/11.1.JPG"
-encoding_file = 'encodings.pickle1'
+file_name = "image/4.jpg"
+encoding_file = 'encodings.pickle12'
 unknown_name = 'Unknown'
-name3 = 'song'
 # Either cnn  or hog. The CNN method is more accurate but slower. HOG is faster but less accurate.
 model_method = 'cnn'
-output_name = 'video/output_' + model_method + '3' +'.avi'
+output_name = 'video/output_' + model_method + '112' +'.avi'
 
 def detectAndDisplay(image):
     
