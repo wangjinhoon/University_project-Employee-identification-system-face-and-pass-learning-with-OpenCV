@@ -4,7 +4,7 @@ import numpy as np
 import pickle
 import time
 
-min_confidence = 0.77
+min_confidence = 0.70
 width = 1000
 height = 0
 show_ratio = 1.0
@@ -23,14 +23,15 @@ layer_names = net.getLayerNames()
 output_layers = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
 
 
-file_name = "image/4.jpg"
+file_name = "image/15.JPG"
 encoding_file = 'encodings.pickle12'
 unknown_name = 'Unknown'
 # Either cnn  or hog. The CNN method is more accurate but slower. HOG is faster but less accurate.
 model_method = 'cnn'
-output_name = 'video/output_' + model_method + '112' +'.avi'
+output_name = 'video/output_' + model_method + '20' +'.avi'
 
 def detectAndDisplay(image):
+    label1=''
     
     start_time = time.time()
     h, w = image.shape[:2]
