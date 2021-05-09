@@ -4,7 +4,7 @@ import numpy as np
 import pickle
 import time
 
-min_confidence = 0.70
+min_confidence = 0.85
 width = 1000
 height = 0
 show_ratio = 1.0
@@ -12,7 +12,7 @@ title_name = 'Custom Yolo'
 
 
 # Load Yolo
-net = cv2.dnn.readNet("model/custom-train-yolo_final.weights", "model/custom-train-yolo.cfg")
+net = cv2.dnn.readNet("model/custom-train-yolo_3000.weights", "model/custom-train-yolo.cfg")
 
 classes = []
 with open("./certificate_dataset/classes.names", "r") as f:
@@ -23,12 +23,12 @@ layer_names = net.getLayerNames()
 output_layers = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
 
 
-file_name = "image/15.JPG"
-encoding_file = 'encodings.pickle12'
+file_name = "image/11.avi"
+encoding_file = 'encodings.pickle1'
 unknown_name = 'Unknown'
 # Either cnn  or hog. The CNN method is more accurate but slower. HOG is faster but less accurate.
 model_method = 'cnn'
-output_name = 'video/output_' + model_method + '20' +'.avi'
+output_name = 'video/output_' + model_method + '7' +'.avi'
 
 def detectAndDisplay(image):
     label1=''
@@ -92,6 +92,7 @@ def detectAndDisplay(image):
 
     # initialize the list of names for each face detected
     names1 = []
+    names2 = []
     
 
     # loop over the facial embeddings
@@ -123,6 +124,7 @@ def detectAndDisplay(image):
         
         # update the list of names
         names1.append(name)
+        print(names1)
 
     # loop over the recognized faces
     for ((top, right, bottom, left), name) in zip(boxes2, names1):
@@ -134,20 +136,34 @@ def detectAndDisplay(image):
             color = (0, 0, 255)
             line = 1
             name = ''
+        names2.append(name)
             
         cv2.rectangle(image, (left, top), (right, bottom), color, line)
         y = top - 15 if top - 15 > 15 else top + 15
         cv2.putText(image, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
             2, color, line)
+        print(names2)
 
 
-        if(label1 == 'certificate_kim' and name == 'wang'):
-            cv2.putText(image, 'Certified person', (10, height - ((1 * 20) + 20)),
-            cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
-            
-        else:
-            cv2.putText(image, 'i dont know', (10, height - ((2 * 20) + 20)),
-            cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+    if(label1 == 'certificate_wang' and names2.count('wang')>1):
+        cv2.putText(image, 'Certified person', (10, height - ((1 * 20) + 20)),
+        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+        cv2.putText(image, '           ', (10, height - ((2 * 20) + 20)),
+        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+
+    
+    #elif(label1 != 'certificate_wang' and name == 'wang'):
+        #cv2.putText(image, '                ', (10, height - ((1 * 20) + 20)),
+        #cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+        #cv2.putText(image, 'show id_card', (10, height - ((2 * 20) + 20)),
+        #cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+
+
+    else:
+        cv2.putText(image, '                ', (10, height - ((1 * 20) + 20)),
+        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+        cv2.putText(image, 'i dont know', (10, height - ((2 * 20) + 20)),
+        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
 
     
 

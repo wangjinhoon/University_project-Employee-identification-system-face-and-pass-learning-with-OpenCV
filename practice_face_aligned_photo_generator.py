@@ -6,9 +6,9 @@ RIGHT_EYE = list(range(36, 42))
 LEFT_EYE = list(range(42, 48))
 EYES = list(range(36, 48))
 
-dataset_paths = ['./dataset/song-front/']
-output_paths = ['./dataset/song-align/']
-number_images = 30
+dataset_paths = ['./dataset/unknown-front/']
+output_paths = ['./dataset/unknown-align/']
+number_images = 20
 image_type = '.jpg'
 
 predictor_file = './model/shape_predictor_68_face_landmarks.dat'

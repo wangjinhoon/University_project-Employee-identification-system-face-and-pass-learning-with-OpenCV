@@ -2,8 +2,8 @@ import cv2
 import face_recognition
 import pickle
 
-dataset_paths = ['./dataset/jang-align/','./dataset/kim-align/','./dataset/song-align/','./dataset/unknown-align/','./dataset/wang-align/','./dataset/c_song-align/','./dataset/c_wang-align/']
-names = ['jang','kim','song','unknown','wang','c_song','c_wang']
+dataset_paths = ['./dataset/jang-align/','./dataset/kim-align/','./dataset/song-align/','./dataset/unknown-align/','./dataset/wang-align/']
+names = ['jang','kim','song','unknown','wang']
 number_images = 20#이미지 갯수
 image_type = '.jpg'
 encoding_file = 'encodings.pickle1'#pickle을 이용해 만듬 
