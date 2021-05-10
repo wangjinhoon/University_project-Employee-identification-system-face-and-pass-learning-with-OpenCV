@@ -2,3 +2,4 @@
 /content/gdrive/My Drive/darknet/certificate_dataset/14.jpg
 /content/gdrive/My Drive/darknet/certificate_dataset/24.jpg
 /content/gdrive/My Drive/darknet/certificate_dataset/34.jpg
+

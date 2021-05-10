@@ -114,10 +114,3 @@
 /content/gdrive/My Drive/darknet/certificate_dataset/118.jpg
 /content/gdrive/My Drive/darknet/certificate_dataset/119.jpg
 /content/gdrive/My Drive/darknet/certificate_dataset/120.jpg
-
-
-
-
-
-
-
