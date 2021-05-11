@@ -146,18 +146,35 @@ def detectAndDisplay(image):
 
 
     if(label1 == 'certificate_wang' and names2.count('wang')>1):
-        cv2.putText(image, 'Certified person', (10, height - ((1 * 20) + 20)),
+        cv2.putText(image, 'Certified_person', (10, height - ((1 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
         cv2.putText(image, '           ', (10, height - ((2 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
 
     
-    #elif(label1 != 'certificate_wang' and name == 'wang'):
-        #cv2.putText(image, '                ', (10, height - ((1 * 20) + 20)),
-        #cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
-        #cv2.putText(image, 'show id_card', (10, height - ((2 * 20) + 20)),
-        #cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+    elif(label1 == 'certificate_song' and names2.count('song')>1):
+        cv2.putText(image, '                ', (10, height - ((1 * 20) + 20)),
+        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+        cv2.putText(image, 'Certified_person', (10, height - ((2 * 20) + 20)),
+        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
 
+    elif(label1 == 'certificate_kim' and names2.count('kim')>1):
+        cv2.putText(image, '                ', (10, height - ((1 * 20) + 20)),
+        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+        cv2.putText(image, 'Certified_person', (10, height - ((2 * 20) + 20)),
+        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+
+    elif(label1 == 'certificate_jang' and names2.count('jang')>1):
+        cv2.putText(image, '                ', (10, height - ((1 * 20) + 20)),
+        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+        cv2.putText(image, 'Certified_person', (10, height - ((2 * 20) + 20)),
+        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+
+    elif(label1 == '' and names2.count('wang')>1):
+        cv2.putText(image, '                ', (10, height - ((1 * 20) + 20)),
+        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+        cv2.putText(image, 'show id_card', (10, height - ((2 * 20) + 20)),
+        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
 
     else:
         cv2.putText(image, '                ', (10, height - ((1 * 20) + 20)),
