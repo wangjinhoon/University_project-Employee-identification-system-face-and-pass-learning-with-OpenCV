@@ -10,6 +10,14 @@ height = 0
 show_ratio = 1.0
 title_name = 'Custom Yolo'
 
+file_name = "image/11.avi"
+
+encoding_file = 'encodings.pickle1'
+unknown_name = 'Unknown'
+# Either cnn  or hog. The CNN method is more accurate but slower. HOG is faster but less accurate.
+model_method = 'cnn'
+# load the known faces and embeddings
+data = pickle.loads(open(encoding_file, "rb").read())
 
 # Load Yolo
 net = cv2.dnn.readNet("model/custom-train-yolo_3000.weights", "model/custom-train-yolo.cfg")
@@ -22,13 +30,8 @@ color_lists = np.random.uniform(0, 255, size=(len(classes), 3))
 layer_names = net.getLayerNames()
 output_layers = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
 
-
-file_name = "image/11.avi"
-encoding_file = 'encodings.pickle1'
-unknown_name = 'Unknown'
-# Either cnn  or hog. The CNN method is more accurate but slower. HOG is faster but less accurate.
-model_method = 'cnn'
 output_name = 'video/output_' + model_method + '7' +'.avi'
+
 
 def detectAndDisplay(image):
     label1=''
@@ -206,8 +209,7 @@ def detectAndDisplay(image):
     if writer is not None:
         writer.write(image)
 ##########################################################3        
-# load the known faces and embeddings
-data = pickle.loads(open(encoding_file, "rb").read())
+
 
 #-- 2. Read the video stream
 cap = cv2.VideoCapture(file_name)
