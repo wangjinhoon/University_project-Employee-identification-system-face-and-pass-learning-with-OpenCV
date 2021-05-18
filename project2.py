@@ -17,8 +17,7 @@ show_ratio = 1.0
 title_name = 'project Yolo'
 
 file_name = "image/6.avi"
-file_name1 = "image/127.jpg"
-weight_name = "model/custom-train-yolo_3000.1.weights"
+weight_name = "model/custom-train-yolo_4000.weights"
 cfg_name = "model/custom-train-yolo.cfg"
 classes_name = "./certificate_dataset/classes.names"
 encoding_file = 'encodings.pickle1'
@@ -31,8 +30,8 @@ model_method = 'cnn'
 # load the known faces and embeddings
 data = pickle.loads(open(encoding_file, "rb").read())
 
-#output_name = 'video/output_' + model_method + '7' +'.avi'
-#writer = None
+output_name = 'video/output_' + model_method + '7' +'.avi'
+writer = None
 
 cap = cv2.VideoCapture()
 def selectWeightFile():
@@ -59,6 +58,7 @@ def selectFile():
 
 
 def detectAndDisplay():
+    global writer
     start_time = time.time()
     _, frame = cap.read()
     if frame is None:
@@ -229,16 +229,15 @@ def detectAndDisplay():
     
     #if the video writer is None *AND* we are supposed to write
     # the output video to disk initialize the writer
-    global writer
     if writer is None and output_name is not None:
         fourcc = cv2.VideoWriter_fourcc(*"MJPG")
         writer = cv2.VideoWriter(output_name, fourcc, 24,
-                (image.shape[1], image.shape[0]), True)
+                (frame.shape[1], frame.shape[0]), True)
 
     # if the writer is not None, write the 5frame with recognized
     # faces to disk
     if writer is not None:
-        writer.write(image)
+        writer.write(frame)
     end_time = time.time()
     process_time = end_time - start_time
     print("=== A frame took {:.3f} seconds".format(process_time))
@@ -247,7 +246,7 @@ def detectAndDisplay():
     imgtk = ImageTk.PhotoImage(image=img)
     lmain.imgtk = imgtk
     lmain.configure(image=imgtk)
-    lmain.after(100, detectAndDisplay)
+    lmain.after(150, detectAndDisplay)
     print('--------')
 
 ##########################################################3
