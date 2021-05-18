@@ -10,7 +10,7 @@ height = 0
 show_ratio = 1.0
 title_name = 'Custom Yolo'
 
-file_name = "image/11.avi"
+file_name = "image/127.jpg"
 
 encoding_file = 'encodings.pickle1'
 unknown_name = 'Unknown'

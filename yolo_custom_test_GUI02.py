@@ -10,11 +10,12 @@ min_confidence = 0.5
 width = 800
 height = 0
 show_ratio = 1.0
-file_name = "image/127.jpg"
+file_name = "image/6.avi"
+file_name1 = "image/127.jpg"
 weight_name = "model/custom-train-yolo_3000.1.weights"
 cfg_name = "model/custom-train-yolo.cfg"
 classes_name = "./certificate_dataset/classes.names"
-title_name = 'Custom Yolo'
+title_name = 'Project Yolo'
 classes = []
 
 def selectWeightFile():
@@ -34,9 +35,83 @@ def selectClassesFile():
 
 def selectFile():
     file_name =  filedialog.askopenfilename(initialdir = "./",title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
-    read_image = cv2.imread(file_name)
-    file_path['text'] = file_name
-    detectAndDisplay(read_image)
+    cap = cv2.VideoCapture(file_name)
+    if not cap.isOpened:
+        print('--(!)Error opening video capture')
+        exit(0)
+    while True:
+        ret, frame = cap.read()
+        if frame is None:
+            print('--(!) No captured frame -- Break!')
+            # close the video file pointers
+            cap.release()
+            # close the writer point
+            break
+        detectAndDisplay1(frame)
+        # Hit 'q' on the keyboard to quit!
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+
+def detectAndDisplay1(image):
+
+
+    net = cv2.dnn.readNet(weight_name, cfg_name)
+    with open(classes_name, "r") as f:
+        classes = [line.strip() for line in f.readlines()]
+    color_lists = np.random.uniform(0, 255, size=(len(classes), 3))
+    layer_names = net.getLayerNames()
+    output_layers = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
+    h, w = image.shape[:2]
+    height = int(h * width / w)
+    img = cv2.resize(image, (width, height))
+
+    blob = cv2.dnn.blobFromImage(img, 0.00392, (416, 416), swapRB=True, crop=False)
+
+    net.setInput(blob)
+    outs = net.forward(output_layers)
+    
+    confidences = []
+    names = []
+    boxes = []
+    colors = []
+
+    for out in outs:
+        for detection in out:
+            scores = detection[5:]
+            class_id = np.argmax(scores)
+            confidence = scores[class_id]
+            if confidence > min_confidence:
+                center_x = int(detection[0] * width)
+                center_y = int(detection[1] * height)
+                w = int(detection[2] * width)
+                h = int(detection[3] * height)
+
+                x = int(center_x - w / 2)
+                y = int(center_y - h / 2)
+
+                boxes.append([x, y, w, h])
+                confidences.append(float(confidence))
+                names.append(classes[class_id])
+                colors.append(color_lists[class_id])
+
+    indexes = cv2.dnn.NMSBoxes(boxes, confidences, min_confidence, 0.4)
+    font = cv2.FONT_HERSHEY_PLAIN
+    for i in range(len(boxes)):
+        if i in indexes:
+            x, y, w, h = boxes[i]
+            label = '{} {:,.2%}'.format(names[i], confidences[i])
+            color = colors[i]
+            print(i, label, x, y, w, h)
+            cv2.rectangle(img, (x, y), (x + w, y + h), color, 2)
+            cv2.putText(img, label, (x, y - 10), font, 1, color, 2)
+    
+    image = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) 
+    image = Image.fromarray(image)
+    imgtk = ImageTk.PhotoImage(image=image)
+    # OpenCV 동영상
+    detection_image.imgtk = imgtk
+    detection_image.configure(image=imgtk)
 
 def detectAndDisplay(image):
     net = cv2.dnn.readNet(weight_name, cfg_name)
@@ -95,11 +170,11 @@ def detectAndDisplay(image):
     detection_image.config(image=imgtk)
     detection_image.image = imgtk
     
-main = Tk()
+main = Tk()#빈 윈도우
 main.title(title_name)
-main.geometry()
+main.geometry()#배열처럼 만듬
 
-read_image = cv2.imread(file_name)
+read_image = cv2.imread(file_name1)
 image = cv2.cvtColor(read_image, cv2.COLOR_BGR2RGB)
 image = Image.fromarray(image)
 imgtk = ImageTk.PhotoImage(image=image)
