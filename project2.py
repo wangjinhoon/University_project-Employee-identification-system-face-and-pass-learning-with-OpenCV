@@ -29,9 +29,8 @@ unknown_name = 'Unknown'
 model_method = 'cnn'
 # load the known faces and embeddings
 data = pickle.loads(open(encoding_file, "rb").read())
+b = 0
 
-output_name = 'video/output_' + model_method + '7' +'.avi'
-writer = None
 
 cap = cv2.VideoCapture()
 def selectWeightFile():
@@ -50,14 +49,22 @@ def selectClassesFile():
     classes_path['text'] = classes_name
 
 def selectFile():
+    global writer
+    global cap
+    global b
     file_name =  filedialog.askopenfilename(initialdir = "./",title = "Select file",filetypes = (("jpeg files","*.jpg"),("avi","*.avi"),("all files","*.*")))
     print('File name : ', file_name)
-    global cap
+    b=b+1
+    writer = None
     cap = cv2.VideoCapture(file_name)
     detectAndDisplay()
 
-
 def detectAndDisplay():
+    global b
+    output_name = 'video/output_' + model_method + str(b) +'.avi'
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        return
+
     global writer
     start_time = time.time()
     _, frame = cap.read()
@@ -67,6 +74,7 @@ def detectAndDisplay():
         cap.release()
         # close the writer point
         writer.release()
+        return
 
     (h, w) = frame.shape[:2]
     height = int(h * width / w)
@@ -195,6 +203,7 @@ def detectAndDisplay():
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
         cv2.putText(frame, '           ', (10, height - ((2 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+        log_ScrolledText.insert(END,"왕진훈")
 
     elif(label1 == 'certificate_song' and names2.count('song')>1):
         cv2.putText(frame, '                ', (10, height - ((1 * 20) + 20)),
@@ -214,7 +223,7 @@ def detectAndDisplay():
         cv2.putText(frame, 'Certified_person', (10, height - ((2 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
 
-    elif(label1 == '' and names2.count('wang')>1):
+    elif(names2.count('wang')>1):
         cv2.putText(frame, '                ', (10, height - ((1 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
         cv2.putText(frame, 'show id_card', (10, height - ((2 * 20) + 20)),
@@ -246,8 +255,7 @@ def detectAndDisplay():
     imgtk = ImageTk.PhotoImage(image=img)
     lmain.imgtk = imgtk
     lmain.configure(image=imgtk)
-    lmain.after(150, detectAndDisplay)
-    print('--------')
+    lmain.after(100, detectAndDisplay)
 
 ##########################################################3
 
@@ -260,6 +268,10 @@ main.geometry()
 label=Label(main, text=title_name)
 label.config(font=("Courier", 18))
 label.grid(row=0,column=0,columnspan=4)
+
+label1=Label(main, text="Entrance")
+label1.config(font=("Courier", 15))
+label1.grid(row=0,column=5,columnspan=1,sticky=(N, S, W, E))
 
 weight_title = Label(main, text='Weight')
 weight_title.grid(row=1,column=0,columnspan=1)
@@ -284,8 +296,20 @@ file_title.grid(row=4,column=0,columnspan=1)
 file_path = Label(main, text=file_name)
 file_path.grid(row=4,column=1,columnspan=2)
 Button(main,text="Select", height=1,command=lambda:selectFile()).grid(row=4, column=3, columnspan=1, sticky=(N, S, W, E))
+
+sizeLabel=Label(main, text='Min Confidence : ')
+sizeLabel.grid(row=5,column=1)
+sizeVal  = IntVar(value=min_confidence)
+sizeSpin = Spinbox(main, textvariable=sizeVal,from_=0, to=1, increment=0.05, justify=RIGHT)
+sizeSpin.grid(row=5, column=2)
+
+log_ScrolledText = tkst.ScrolledText(width=10, height=10)
+log_ScrolledText.grid(row=1,column=5,rowspan=5)
+
+log_ScrolledText.configure(font='TkFixedFont')
+
 imageFrame = Frame(main) # 프레임 너비, 높이 설정
-imageFrame.grid(row=5,column=0,columnspan=4) # 격자 행, 열 배치
+imageFrame.grid(row=7,column=0,columnspan=4) # 격자 행, 열 배치
 
 lmain=Label(imageFrame)
 lmain.grid(row=0, column=0)
