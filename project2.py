@@ -11,16 +11,16 @@ import tkinter.scrolledtext as tkst
 
 
 min_confidence = 0.85
-width = 1000
+width = 800
 height = 0
 show_ratio = 1.0
 title_name = 'project Yolo'
 
 file_name = "image/6.avi"
-weight_name = "model/custom-train-yolo_4000.weights"
+weight_name = "model/custom-train-yolo_5.weights"
 cfg_name = "model/custom-train-yolo.cfg"
 classes_name = "./certificate_dataset/classes.names"
-encoding_file = 'encodings.pickle1'
+encoding_file = 'encodings1.pickle'
 title_name = "project Yolo"
 cap = cv2.VideoCapture()
 writer = None
@@ -29,6 +29,7 @@ unknown_name = 'Unknown'
 model_method = 'cnn'
 # load the known faces and embeddings
 data = pickle.loads(open(encoding_file, "rb").read())
+a = 'Certified_person'
 b = 0
 
 
@@ -48,11 +49,17 @@ def selectClassesFile():
     classes_name =  filedialog.askopenfilename(initialdir = "./",title = "Select Classes file",filetypes = (("names files","*.names"),("all files","*.*")))
     classes_path['text'] = classes_name
 
+def selectEncoding_file():
+    global Encoding_file
+    Encoding_file =  filedialog.askopenfilename(initialdir = "./",title = "Select Encoding file",filetypes = (("names files","*.pickle"),("all files","*.*")))
+    Encoding_path['text'] = Encoding_file
+
 def selectFile():
     global writer
     global cap
     global b
     file_name =  filedialog.askopenfilename(initialdir = "./",title = "Select file",filetypes = (("jpeg files","*.jpg"),("avi","*.avi"),("all files","*.*")))
+    file_path['text'] = classes_name
     print('File name : ', file_name)
     b=b+1
     writer = None
@@ -60,6 +67,7 @@ def selectFile():
     detectAndDisplay()
 
 def detectAndDisplay():
+    global a
     global b
     output_name = 'video/output_' + model_method + str(b) +'.avi'
     if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -199,41 +207,38 @@ def detectAndDisplay():
 
 
     if(label1 == 'certificate_wang' and names2.count('wang')>1):
-        cv2.putText(frame, 'Certified_person', (10, height - ((1 * 20) + 20)),
+        cv2.putText(frame, str(a) , (10, height - ((1 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
-        cv2.putText(frame, '           ', (10, height - ((2 * 20) + 20)),
-        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
-        log_ScrolledText.insert(END,"왕진훈")
+        log_ScrolledText.insert(END,"왕진훈\n")
 
     elif(label1 == 'certificate_song' and names2.count('song')>1):
-        cv2.putText(frame, '                ', (10, height - ((1 * 20) + 20)),
+        cv2.putText(frame, str(a) , (10, height - ((1 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
-        cv2.putText(frame, 'Certified_person', (10, height - ((2 * 20) + 20)),
-        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+        log_ScrolledText.insert(END,"송민수\n")
+
 
     elif(label1 == 'certificate_kim' and names2.count('kim')>1):
-        cv2.putText(frame, '                ', (10, height - ((1 * 20) + 20)),
+        cv2.putText(frame, str(a) , (10, height - ((1 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
-        cv2.putText(frame, 'Certified_person', (10, height - ((2 * 20) + 20)),
-        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+        log_ScrolledText.insert(END,"김민우\n")
 
     elif(label1 == 'certificate_jang' and names2.count('jang')>1):
-        cv2.putText(frame, '                ', (10, height - ((1 * 20) + 20)),
+        cv2.putText(frame, str(a) , (10, height - ((1 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
-        cv2.putText(frame, 'Certified_person', (10, height - ((2 * 20) + 20)),
-        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+        log_ScrolledText.insert(END,"장은석\n")
 
-    elif(names2.count('wang')>1):
-        cv2.putText(frame, '                ', (10, height - ((1 * 20) + 20)),
+
+    elif(names2.count('wang')>0):
+        a = 'show id_card'
+        cv2.putText(frame, str(a), (10, height - ((1 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
-        cv2.putText(frame, 'show id_card', (10, height - ((2 * 20) + 20)),
-        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+        a='Certified_person'
 
     else:
-        cv2.putText(frame, '                ', (10, height - ((1 * 20) + 20)),
+        a = 'i dont know'
+        cv2.putText(frame, str(a), (10, height - ((1 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
-        cv2.putText(frame, 'i dont know', (10, height - ((2 * 20) + 20)),
-        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+        a='Certified_person'
 
     
     #if the video writer is None *AND* we are supposed to write
@@ -291,17 +296,23 @@ classes_path = Label(main, text=classes_name)
 classes_path.grid(row=3,column=1,columnspan=2)
 Button(main,text="Select", height=1,command=lambda:selectClassesFile()).grid(row=3, column=3, columnspan=1, sticky=(N, S, W, E))
 
+file_title1 = Label(main, text='Encoding_file')
+file_title1.grid(row=4,column=0,columnspan=1)
+Encoding_path = Label(main, text=encoding_file)
+Encoding_path.grid(row=4,column=1,columnspan=2)
+Button(main,text="Select", height=1,command=lambda:selectEncoding_file()).grid(row=4, column=3, columnspan=1, sticky=(N, S, W, E))
+
 file_title = Label(main, text='Image')
-file_title.grid(row=4,column=0,columnspan=1)
+file_title.grid(row=5,column=0,columnspan=1)
 file_path = Label(main, text=file_name)
-file_path.grid(row=4,column=1,columnspan=2)
-Button(main,text="Select", height=1,command=lambda:selectFile()).grid(row=4, column=3, columnspan=1, sticky=(N, S, W, E))
+file_path.grid(row=5,column=1,columnspan=2)
+Button(main,text="Select", height=1,command=lambda:selectFile()).grid(row=5, column=3, columnspan=1, sticky=(N, S, W, E))
 
 sizeLabel=Label(main, text='Min Confidence : ')
-sizeLabel.grid(row=5,column=1)
+sizeLabel.grid(row=6,column=1)
 sizeVal  = IntVar(value=min_confidence)
 sizeSpin = Spinbox(main, textvariable=sizeVal,from_=0, to=1, increment=0.05, justify=RIGHT)
-sizeSpin.grid(row=5, column=2)
+sizeSpin.grid(row=6, column=2)
 
 log_ScrolledText = tkst.ScrolledText(width=10, height=10)
 log_ScrolledText.grid(row=1,column=5,rowspan=5)
