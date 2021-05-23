@@ -129,6 +129,9 @@ def detectAndDisplay():
                 confidences.append(float(confidence))
                 names.append(classes[class_id])
                 colors.append(color_lists[class_id])
+    
+    print("center_x,y",center_x,center_y)
+                
                 
     indexes = cv2.dnn.NMSBoxes(boxes, confidences, min_confidence, 0.4)
     font = cv2.FONT_HERSHEY_PLAIN
@@ -138,12 +141,12 @@ def detectAndDisplay():
             label = '{} {:,.2%}'.format(names[i], confidences[i])
             label1 = '{}'.format(names[i])
             color = colors[i]
-            print(i, label, x, y, w, h)
+            print(i, label, x, y, x + w, y + h)
             cv2.rectangle(frame, (x, y), (x + w, y + h), color, 2)
             cv2.putText(frame, label, (x, y - 10), font, 1, color, 2)
+            
 
     ####################################################################
-
     # detect the (x, y)-coordinates of the bounding boxes corresponding
     # to each face in the input image, then compute the facial embeddings
     # for each face
@@ -154,7 +157,7 @@ def detectAndDisplay():
     # initialize the list of names for each face detected
     names1 = []
     names2 = []
-    
+    names3 = []
 
     # loop over the facial embeddings
     for encoding in encodings:
@@ -197,32 +200,37 @@ def detectAndDisplay():
             color = (0, 0, 255)
             line = 1
             name = ''
-        names2.append(name)
-            
+
+        if(x < center_x < x+w and y < center_y < y+h):
+            names3.append(name)
+            print("names3",names3)
+        else:
+            names2.append(name)
+            print("names2",names2)
+
         cv2.rectangle(frame, (left, top), (right, bottom), color, line)
         y = top - 15 if top - 15 > 15 else top + 15
         cv2.putText(frame, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
             2, color, line)
-        
+       
 
-
-    if(label1 == 'certificate_wang' and names2.count('wang')>1):
+    if(label1 == 'certificate_wang' and names2.count('wang')>0 and names2.count('wang')<2 and names3.count('wang')>0):
         cv2.putText(frame, str(a) , (10, height - ((1 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
         log_ScrolledText.insert(END,"왕진훈\n")
 
-    elif(label1 == 'certificate_song' and names2.count('song')>1):
+    elif(label1 == 'certificate_song' and names2.count('song')>0 and names2.count('song')<2 and names3.count('song')>0):
         cv2.putText(frame, str(a) , (10, height - ((1 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
         log_ScrolledText.insert(END,"송민수\n")
 
 
-    elif(label1 == 'certificate_kim' and names2.count('kim')>1):
+    elif(label1 == 'certificate_kim' and names2.count('kim')>0 and names2.count('kim')<2 and names3.count('kim')>0):
         cv2.putText(frame, str(a) , (10, height - ((1 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
         log_ScrolledText.insert(END,"김민우\n")
 
-    elif(label1 == 'certificate_jang' and names2.count('jang')>1):
+    elif(label1 == 'certificate_jang' and names2.count('jang')>0 and names2.count('jang')<2 and names3.count('jang')>0):
         cv2.putText(frame, str(a) , (10, height - ((1 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
         log_ScrolledText.insert(END,"장은석\n")
