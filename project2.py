@@ -156,8 +156,8 @@ def detectAndDisplay():
 
     # initialize the list of names for each face detected
     names1 = []
-    names2 = []
-    names3 = []
+    p_names = []
+    c_names = []
 
     # loop over the facial embeddings
     for encoding in encodings:
@@ -201,12 +201,12 @@ def detectAndDisplay():
             line = 1
             name = ''
 
-        if(x < center_x < x+w and y < center_y < y+h):
-            names3.append(name)
-            print("names3",names3)
+        if(x < (left+right)/2 < x+w and y < (top+bottom)/2 < y+h):
+            c_names.append(name)
+            print("c_names",c_names)
         else:
-            names2.append(name)
-            print("names2",names2)
+            p_names.append(name)
+            print("p_names",p_names)
 
         cv2.rectangle(frame, (left, top), (right, bottom), color, line)
         y = top - 15 if top - 15 > 15 else top + 15
@@ -214,29 +214,29 @@ def detectAndDisplay():
             2, color, line)
        
 
-    if(label1 == 'certificate_wang' and names2.count('wang')>0 and names2.count('wang')<2 and names3.count('wang')>0):
+    if(label1 == 'certificate_wang' and p_names.count('wang')>0 and p_names.count('wang')<2 and c_names.count('wang')>0):
         cv2.putText(frame, str(a) , (10, height - ((1 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
         log_ScrolledText.insert(END,"왕진훈\n")
 
-    elif(label1 == 'certificate_song' and names2.count('song')>0 and names2.count('song')<2 and names3.count('song')>0):
+    elif(label1 == 'certificate_song' and p_names.count('song')>0 and p_names.count('song')<2 and c_names.count('song')>0):
         cv2.putText(frame, str(a) , (10, height - ((1 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
         log_ScrolledText.insert(END,"송민수\n")
 
 
-    elif(label1 == 'certificate_kim' and names2.count('kim')>0 and names2.count('kim')<2 and names3.count('kim')>0):
+    elif(label1 == 'certificate_kim' and p_names.count('kim')>0 and p_names.count('kim')<2 and c_names.count('kim')>0):
         cv2.putText(frame, str(a) , (10, height - ((1 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
         log_ScrolledText.insert(END,"김민우\n")
 
-    elif(label1 == 'certificate_jang' and names2.count('jang')>0 and names2.count('jang')<2 and names3.count('jang')>0):
+    elif(label1 == 'certificate_jang' and p_names.count('jang')>0 and p_names.count('jang')<2 and c_names.count('jang')>0):
         cv2.putText(frame, str(a) , (10, height - ((1 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
         log_ScrolledText.insert(END,"장은석\n")
 
 
-    elif(names2.count('wang')>0):
+    elif(p_names.count('wang')>0):
         a = 'show id_card'
         cv2.putText(frame, str(a), (10, height - ((1 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
