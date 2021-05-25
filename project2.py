@@ -212,9 +212,16 @@ def detectAndDisplay():
         y = top - 15 if top - 15 > 15 else top + 15
         cv2.putText(frame, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
             2, color, line)
-       
 
-    if(label1 == 'certificate_wang' and p_names.count('wang')>0 and p_names.count('wang')<2 and c_names.count('wang')>0):
+
+    
+    if(len(c_names)>1):
+        a = 'many person recognition'
+        cv2.putText(frame, str(a), (10, height - ((1 * 20) + 20)),
+        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+        a='Certified_person'
+
+    elif(label1 == 'certificate_wang' and p_names.count('wang')>0 and p_names.count('wang')<2 and c_names.count('wang')>0):
         cv2.putText(frame, str(a) , (10, height - ((1 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
         log_ScrolledText.insert(END,"왕진훈\n")
@@ -237,6 +244,24 @@ def detectAndDisplay():
 
 
     elif(p_names.count('wang')>0):
+        a = 'show id_card'
+        cv2.putText(frame, str(a), (10, height - ((1 * 20) + 20)),
+        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+        a='Certified_person'
+
+    elif(p_names.count('song')>0):
+        a = 'show id_card'
+        cv2.putText(frame, str(a), (10, height - ((1 * 20) + 20)),
+        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+        a='Certified_person'
+
+    elif(p_names.count('kim')>0):
+        a = 'show id_card'
+        cv2.putText(frame, str(a), (10, height - ((1 * 20) + 20)),
+        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+        a='Certified_person'
+    
+    elif(p_names.count('jang')>0):
         a = 'show id_card'
         cv2.putText(frame, str(a), (10, height - ((1 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
