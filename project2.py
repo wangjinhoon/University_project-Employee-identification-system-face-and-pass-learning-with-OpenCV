@@ -54,13 +54,22 @@ def selectEncoding_file():
     Encoding_file =  filedialog.askopenfilename(initialdir = "./",title = "Select Encoding file",filetypes = (("names files","*.pickle"),("all files","*.*")))
     Encoding_path['text'] = Encoding_file
 
+def cam():
+    global writer
+    global cap
+    global b
+    b=b+1
+    writer = None
+    file_name = 0
+    cap = cv2.VideoCapture(file_name)
+    detectAndDisplay()
+
 def selectFile():
     global writer
     global cap
     global b
     file_name =  filedialog.askopenfilename(initialdir = "./",title = "Select file",filetypes = (("jpeg files","*.jpg"),("avi","*.avi"),("all files","*.*")))
-    file_path['text'] = classes_name
-    print('File name : ', file_name)
+    file_path['text'] = file_name
     b=b+1
     writer = None
     cap = cv2.VideoCapture(file_name)
@@ -69,6 +78,12 @@ def selectFile():
 def detectAndDisplay():
     global a
     global b
+    x = None
+    y = None
+    left = None
+    right = None
+    top = None
+    bottom = None
     output_name = 'video/output_' + model_method + str(b) +'.avi'
     if cv2.waitKey(1) & 0xFF == ord('q'):
         return
@@ -83,7 +98,6 @@ def detectAndDisplay():
         # close the writer point
         writer.release()
         return
-
     (h, w) = frame.shape[:2]
     height = int(h * width / w)
     frame = cv2.resize(frame, (width, height))
@@ -130,7 +144,6 @@ def detectAndDisplay():
                 names.append(classes[class_id])
                 colors.append(color_lists[class_id])
     
-    print("center_x,y",center_x,center_y)
                 
                 
     indexes = cv2.dnn.NMSBoxes(boxes, confidences, min_confidence, 0.4)
@@ -201,12 +214,16 @@ def detectAndDisplay():
             line = 1
             name = ''
 
-        if(x < (left+right)/2 < x+w and y < (top+bottom)/2 < y+h):
-            c_names.append(name)
-            print("c_names",c_names)
+        if x != None and y != None and left != None and right != None and top != None and bottom != None:
+            if(x < (left+right)/2 < x+w and y < (top+bottom)/2 < y+h):
+                c_names.append(name)
+                print("c_names",c_names)
+            else:
+                p_names.append(name)
+                print("p_names",p_names)
+
         else:
             p_names.append(name)
-            print("p_names",p_names)
 
         cv2.rectangle(frame, (left, top), (right, bottom), color, line)
         y = top - 15 if top - 15 > 15 else top + 15
@@ -215,7 +232,7 @@ def detectAndDisplay():
 
 
     
-    if(len(c_names)>1):
+    if(len(p_names)>1):
         a = 'many person recognition'
         cv2.putText(frame, str(a), (10, height - ((1 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
@@ -244,25 +261,25 @@ def detectAndDisplay():
 
 
     elif(p_names.count('wang')>0):
-        a = 'show id_card'
+        a = 'show your_id_card'
         cv2.putText(frame, str(a), (10, height - ((1 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
         a='Certified_person'
 
     elif(p_names.count('song')>0):
-        a = 'show id_card'
+        a = 'show your_id_card'
         cv2.putText(frame, str(a), (10, height - ((1 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
         a='Certified_person'
 
     elif(p_names.count('kim')>0):
-        a = 'show id_card'
+        a = 'show your_id_card'
         cv2.putText(frame, str(a), (10, height - ((1 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
         a='Certified_person'
     
     elif(p_names.count('jang')>0):
-        a = 'show id_card'
+        a = 'show your_id_card'
         cv2.putText(frame, str(a), (10, height - ((1 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
         a='Certified_person'
@@ -294,6 +311,7 @@ def detectAndDisplay():
     lmain.imgtk = imgtk
     lmain.configure(image=imgtk)
     lmain.after(100, detectAndDisplay)
+
 
 ##########################################################3
 
@@ -341,11 +359,15 @@ file_path = Label(main, text=file_name)
 file_path.grid(row=5,column=1,columnspan=2)
 Button(main,text="Select", height=1,command=lambda:selectFile()).grid(row=5, column=3, columnspan=1, sticky=(N, S, W, E))
 
+file_title2 = Label(main, text=' Play CAM')
+file_title2.grid(row=6,column=2,columnspan=1)
+Button(main,text="Select", height=1,command=lambda:cam()).grid(row=6, column=3, columnspan=1, sticky=(N, S, W, E))
+
 sizeLabel=Label(main, text='Min Confidence : ')
-sizeLabel.grid(row=6,column=1)
+sizeLabel.grid(row=6,column=0)
 sizeVal  = IntVar(value=min_confidence)
 sizeSpin = Spinbox(main, textvariable=sizeVal,from_=0, to=1, increment=0.05, justify=RIGHT)
-sizeSpin.grid(row=6, column=2)
+sizeSpin.grid(row=6, column=1)
 
 log_ScrolledText = tkst.ScrolledText(width=10, height=10)
 log_ScrolledText.grid(row=1,column=5,rowspan=5)
