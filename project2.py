@@ -31,6 +31,7 @@ model_method = 'cnn'
 data = pickle.loads(open(encoding_file, "rb").read())
 a = 'Certified_person'
 b = 0
+wang = 0
 
 
 cap = cv2.VideoCapture()
@@ -78,6 +79,7 @@ def selectFile():
 def detectAndDisplay():
     global a
     global b
+    global wang
     x = None
     y = None
     left = None
@@ -230,7 +232,6 @@ def detectAndDisplay():
         cv2.putText(frame, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
             2, color, line)
 
-
     
     if(len(p_names)>1):
         a = 'many person recognition'
@@ -241,7 +242,9 @@ def detectAndDisplay():
     elif(label1 == 'certificate_wang' and p_names.count('wang')>0 and p_names.count('wang')<2 and c_names.count('wang')>0):
         cv2.putText(frame, str(a) , (10, height - ((1 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
-        log_ScrolledText.insert(END,"왕진훈\n")
+        if wang == 0:
+            log_ScrolledText.insert(END,"왕진훈\n")
+            wang = 1
 
     elif(label1 == 'certificate_song' and p_names.count('song')>0 and p_names.count('song')<2 and c_names.count('song')>0):
         cv2.putText(frame, str(a) , (10, height - ((1 * 20) + 20)),
