@@ -32,6 +32,9 @@ data = pickle.loads(open(encoding_file, "rb").read())
 a = 'Certified_person'
 b = 0
 wang = 0
+song = 0
+jang = 0
+kim = 0
 
 
 cap = cv2.VideoCapture()
@@ -80,6 +83,7 @@ def detectAndDisplay():
     global a
     global b
     global wang
+    global song
     x = None
     y = None
     left = None
@@ -249,7 +253,9 @@ def detectAndDisplay():
     elif(label1 == 'certificate_song' and p_names.count('song')>0 and p_names.count('song')<2 and c_names.count('song')>0):
         cv2.putText(frame, str(a) , (10, height - ((1 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
-        log_ScrolledText.insert(END,"송민수\n")
+        if song == 0:
+            log_ScrolledText.insert(END,"송민수\n")
+            song = 1
 
 
     elif(label1 == 'certificate_kim' and p_names.count('kim')>0 and p_names.count('kim')<2 and c_names.count('kim')>0):
