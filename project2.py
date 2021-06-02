@@ -84,6 +84,8 @@ def detectAndDisplay():
     global b
     global wang
     global song
+    global kim
+    global jang
     x = None
     y = None
     left = None
@@ -248,6 +250,7 @@ def detectAndDisplay():
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
         if wang == 0:
             log_ScrolledText.insert(END,"왕진훈\n")
+            log_ScrolledText.insert(END,time.ctime())
             wang = 1
 
     elif(label1 == 'certificate_song' and p_names.count('song')>0 and p_names.count('song')<2 and c_names.count('song')>0):
@@ -261,12 +264,16 @@ def detectAndDisplay():
     elif(label1 == 'certificate_kim' and p_names.count('kim')>0 and p_names.count('kim')<2 and c_names.count('kim')>0):
         cv2.putText(frame, str(a) , (10, height - ((1 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
-        log_ScrolledText.insert(END,"김민우\n")
+        if kim == 0:
+            log_ScrolledText.insert(END,"김민우\n")
+            kim = 1 
 
     elif(label1 == 'certificate_jang' and p_names.count('jang')>0 and p_names.count('jang')<2 and c_names.count('jang')>0):
         cv2.putText(frame, str(a) , (10, height - ((1 * 20) + 20)),
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
-        log_ScrolledText.insert(END,"장은석\n")
+        if jang == 0:
+            log_ScrolledText.insert(END,"장은석\n")
+            jang = 1
 
 
     elif(p_names.count('wang')>0):
@@ -319,7 +326,7 @@ def detectAndDisplay():
     imgtk = ImageTk.PhotoImage(image=img)
     lmain.imgtk = imgtk
     lmain.configure(image=imgtk)
-    lmain.after(100, detectAndDisplay)
+    lmain.after(300, detectAndDisplay)
 
 
 ##########################################################3
