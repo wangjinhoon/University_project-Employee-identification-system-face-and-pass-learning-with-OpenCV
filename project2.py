@@ -258,6 +258,7 @@ def detectAndDisplay():
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
         if song == 0:
             log_ScrolledText.insert(END,"송민수\n")
+            log_ScrolledText.insert(END,time.ctime())
             song = 1
 
 
@@ -266,6 +267,7 @@ def detectAndDisplay():
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
         if kim == 0:
             log_ScrolledText.insert(END,"김민우\n")
+            log_ScrolledText.insert(END,time.ctime())
             kim = 1 
 
     elif(label1 == 'certificate_jang' and p_names.count('jang')>0 and p_names.count('jang')<2 and c_names.count('jang')>0):
@@ -273,6 +275,7 @@ def detectAndDisplay():
         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
         if jang == 0:
             log_ScrolledText.insert(END,"장은석\n")
+            log_ScrolledText.insert(END,time.ctime())
             jang = 1
 
 
