@@ -251,6 +251,7 @@ def detectAndDisplay():
         if wang == 0:
             log_ScrolledText.insert(END,"왕진훈\n")
             log_ScrolledText.insert(END,time.ctime())
+            log_ScrolledText.insert(END,"\n")
             wang = 1
 
     elif(label1 == 'certificate_song' and p_names.count('song')>0 and p_names.count('song')<2 and c_names.count('song')>0):
@@ -259,6 +260,7 @@ def detectAndDisplay():
         if song == 0:
             log_ScrolledText.insert(END,"송민수\n")
             log_ScrolledText.insert(END,time.ctime())
+            log_ScrolledText.insert(END,"\n")
             song = 1
 
 
@@ -268,6 +270,7 @@ def detectAndDisplay():
         if kim == 0:
             log_ScrolledText.insert(END,"김민우\n")
             log_ScrolledText.insert(END,time.ctime())
+            log_ScrolledText.insert(END,"\n")
             kim = 1 
 
     elif(label1 == 'certificate_jang' and p_names.count('jang')>0 and p_names.count('jang')<2 and c_names.count('jang')>0):
@@ -276,6 +279,7 @@ def detectAndDisplay():
         if jang == 0:
             log_ScrolledText.insert(END,"장은석\n")
             log_ScrolledText.insert(END,time.ctime())
+            log_ScrolledText.insert(END,"\n")
             jang = 1
 
 
