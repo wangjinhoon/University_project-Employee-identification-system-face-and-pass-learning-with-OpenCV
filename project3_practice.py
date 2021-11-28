@@ -18,25 +18,31 @@ show_ratio = 1.0
 title_name = 'Wangs_project'
 frame_count = 0
 file_name = "image/.avi"
-weight_name = "model/custom-train-yolo_3.2.weights"
+weight_name = "model/custom-train-yolo_4.1.weights"
 cfg_name = "model/custom-train-yolo.cfg"
 classes_name = "./certificate_dataset/classes.names"
-encoding_file = 'encodings1.pickle'
+encoding_file = 'encodings.pickle1'
 cap = cv2.VideoCapture()
 writer = None
 unknown_name = 'Unknown'
 # Either cnn  or hog. The CNN method is more accurate but slower. HOG is faster but less accurate.
 model_method = 'cnn'
 min_directions = 5
+man_directions = 10
 # load the known faces and embeddings
 data = pickle.loads(open(encoding_file, "rb").read())
 a = 'Certified_person'
 b = 0
+#b1 = ''
 c = 0
+#t = ''
+#r = ''
+#l = ''
 wang = 0
 song = 0
 jang = 0
 kim = 0
+maximum_name = []
 
 height = 0
 width = 0
@@ -45,13 +51,14 @@ count_limit = 0
 right_count = 0
 left_count = 0
 direction = ''
-
+z = 0
 tracker = Tracker()
 trackers = []
 trackables = {}
 max_name = []
 max_name1 = []
 lists = []
+
 
 
 cap = cv2.VideoCapture()
@@ -98,7 +105,6 @@ def selectFile():
 
 def detectAndDisplay():
     global a
-    global b
     global c
     global wang
     global song
@@ -112,6 +118,14 @@ def detectAndDisplay():
     global right_count
     global max_name
     global max_name1
+    global z
+    global man_directions
+    t = None 
+    r = None
+    global b
+    b1 = None
+    l = None
+    global maximum_name
     name = []
     x = None
     y = None
@@ -136,6 +150,9 @@ def detectAndDisplay():
     (height, width) = frame.shape[:2] 
     count_limit = (width // 2)-200
     count_limit1 = (width // 2)+200
+
+    frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    frame_gray = cv2.equalizeHist(frame_gray)
 
 
     # draw a horizontal line in the center of the frame
@@ -210,7 +227,6 @@ def detectAndDisplay():
     encodings = face_recognition.face_encodings(rgb, boxes)
     names = []
     names1 = []
-    p_names = []
     c_names = []
     
     
@@ -243,34 +259,42 @@ def detectAndDisplay():
         # update the list of names
         names.append(name)
     rects = []
-
+    maximum = 0
     # loop over the recognized faces 박스엔 4개, 네임엔 네임스
     for ((top, right, bottom, left), name) in zip(boxes, names):
         # draw the predicted face name on the image
         y = top - 15 if top - 15 > 15 else top + 15
         color = (0, 255, 0)
         line = 2
+        hh = bottom-top
+        ww = right-left
+        now = hh*ww
+
         if(name == unknown_name):
             color = (0, 0, 255)
             line = 1
             name = ''
+ 
+        if maximum < now:
+            maximum = now
+            maximum_name = name
+            t,r,b1,l = top, right, bottom, left
+
         if x != None and y != None and left != None and right != None and top != None and bottom != None:
             if(x < (left+right)/2 < x+w and y < (top+bottom)/2 < y+h):
                 c_names.append(name)
                 print("c_names",c_names)
-            else:
-                p_names.append(name)
-                print("p_names",p_names)
-                rects.append([left, top, right, bottom])
-
-        else:
-            p_names.append(name)
-            rects.append([left, top, right, bottom])
-
+        
+        
         cv2.rectangle(frame, (left, top), (right, bottom), color, line)
         y = top - 15 if top - 15 > 15 else top + 15
         cv2.putText(frame, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
         0.75, color, line)
+    
+    if l != None and t != None and r != None and b1 != None:
+        rects.append([l, t, r, b1])
+        del l, t, r, b1
+    
     
 
     #frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -289,34 +313,50 @@ def detectAndDisplay():
             if trackable is None:
                     trackable = Trackable(objectID, centroid)
             else:
-
-                    if(label1 == 'certificate_wang' and p_names.count('wang')>0 and p_names.count('wang')<2 and c_names.count('wang')>0):
-                        names1.append('c_wang')
-                        lists.append(names1)
+                    
+                    if(label1 == 'certificate_wang' and 'wang' in max_name and c_names.count('wang')>0):
+                        lists.append('c_wang')
                         len_list = len(lists)
                         if len_list > min_directions:
                             max_name = max(lists,key=lists.count)
                             lists.pop(0)
-                            if max_name == 'c_wang':
+                            if  'c_wang' in max_name:
                                 max_name1 = 'c_wang'
+                                c = 1 
+                                print('maxname1: ')
                                 print(max_name1)
                         
 
                     
-                    elif(label1 == 'certificate_song' and p_names.count('song')>0 and p_names.count('song')<2 and c_names.count('song')>0):
-                        names1.append('c_song')
-                    
-                    else:
-                        lists.append(name)
+                    elif(label1 == 'certificate_song' and 'song' in max_name and c_names.count('song')>0):
+                        lists.append('c_song')
                         len_list = len(lists)
-                        print('lists :',lists)
-                        if c != 0:
-                            max_name = max_name1
                         if len_list > min_directions:
                             max_name = max(lists,key=lists.count)
                             lists.pop(0)
-                      
+                            if  'c_song' in max_name:
+                                max_name1 = 'c_song'
+                                c = 1 
+                                print('maxname1: ')
+                                print(max_name1)
+
                     
+                    else:
+                        if c != 0:
+                            max_name = max_name1
+                                                   
+                        else:
+                            lists.append(maximum_name)
+                            len_list = len(lists)
+                            print('lists :',lists)
+                        
+                            if len_list > min_directions:
+                                max_name = max(lists,key=lists.count)
+                                lists.pop(0)
+                            
+                                
+
+
                     #평균값을 구한다.
                     x = [c[0] for c in trackable.centroids]
                     variation = centroid[0] - np.mean(x)
@@ -331,29 +371,57 @@ def detectAndDisplay():
 
                     # check to see if the object has been counted or not
                     if (not trackable.counted) and (len_directions > min_directions):
-                            if direction == 1 and centroid[0] < count_limit:
-                                    print('left_count')
-                                    print(centroid[0],',,',count_limit)
-                                    left_count += 1
-                                    trackable.counted = True
-                                    log_ScrolledText.insert(END,"왕진훈\n")
-                                    log_ScrolledText.insert(END,time.ctime())
-                                    log_ScrolledText.insert(END,"\n")
-                            elif direction == 0 and centroid[0] > count_limit1:
-                                    print('right_count')
-                                    print(centroid[0],',,',count_limit1)
-                                    right_count += 1
-                                    trackable.counted = True
+                        
+                            if z == 1:
+                                        if direction == 0 and centroid[0] > count_limit1:
+                                                print('z1111')
+                                            
+                            else:
+                                
+                                if direction == 1 and centroid[0] < count_limit:
+                                    
+                                        if 'c_wang' in max_name:
+                                            print('left_count')
+                                            print(centroid[0],',,',count_limit)
+                                            left_count += 1
+                                            trackable.counted = True
+                                            log_ScrolledText.insert(END,"왕진훈\n")
+                                            log_ScrolledText.insert(END,time.ctime())
+                                            log_ScrolledText.insert(END,"\n")
+                                            c = 0
+                                            max_name = []
+                                        
+                                        elif 'c_song' in max_name:
+                                            print('left_count')
+                                            print(centroid[0],',,',count_limit)
+                                            left_count += 1
+                                            trackable.counted = True
+                                            log_ScrolledText.insert(END,"송민수\n")
+                                            log_ScrolledText.insert(END,time.ctime())
+                                            log_ScrolledText.insert(END,"\n")
+                                            c = 0
+                                            max_name = []
+                                    
+                                        else :
+                                            z = 1
+
+                                   
+                                elif direction == 0 and centroid[0] > count_limit1:
+                                        print('right_count')
+                                        print(centroid[0],',,',count_limit1)
+                                        right_count += 1
+                                        trackable.counted = True
 
             # store the trackable object in our dictionary
             trackables[objectID] = trackable
             text = "ID:{}".format(objectID)
             text_name = "Name:{}".format(max_name)
+            
             cv2.putText(frame, text, (centroid[0] + 10, centroid[1] + 10),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
             cv2.putText(frame, text_name, (centroid[0] + 10, centroid[1] - 10),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-            print(max_name)
+            print(max_name)   
             cv2.circle(frame, (centroid[0], centroid[1]), 4, (0, 255, 0), -1)
             
 
@@ -375,7 +443,12 @@ def detectAndDisplay():
     end_time = time.time()
     process_time = end_time - start_time
     print("=== A frame took {:.3f} seconds".format(process_time))
-    cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
+    cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA) 
+
+    if z == 1:
+        cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        z = tracker.z
+
     img = Image.fromarray(cv2image)
     imgtk = ImageTk.PhotoImage(image=img)
     lmain.imgtk = imgtk
