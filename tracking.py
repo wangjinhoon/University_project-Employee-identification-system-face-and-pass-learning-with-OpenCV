@@ -2,20 +2,24 @@ from scipy.spatial import distance as dist
 from collections import OrderedDict
 import numpy as np
 
+
+
 class Trackable:
         def __init__(self, objectID, centroid):
                 self.objectID = objectID
                 self.centroids = [centroid]
                 self.directions = []
                 self.counted = False
-                
+        
 class Tracker:
-        def __init__(self, maxDisappeared=50):
+        def __init__(self, maxDisappeared=10):
                 self.nextObjectID = 0
                 self.objects = OrderedDict()
                 self.disappeared = OrderedDict()
                 self.maxDisappeared = maxDisappeared
                 self.positions = []
+                self.z = 1
+                
 
         def register(self, centroid):
                 self.objects[self.nextObjectID] = centroid
@@ -25,9 +29,15 @@ class Tracker:
         def deregister(self, objectID):
                 del self.objects[objectID]
                 del self.disappeared[objectID]
+                self.z = 0
                 print('DEREGISTERED : ' + str(objectID))
-                
+                return self.z
+
+
+            
         def update(self, rects):
+                if self.z == 0:
+                        self.z = 1
                 if len(rects) == 0:
                         for objectID in list(self.disappeared.keys()):
                                 self.disappeared[objectID] += 1
