@@ -1,5 +1,5 @@
 classes = 4
-train = /content/gdrive/My\ Drive/darknet/certificate_dataset/train.txt
-valid = /content/gdrive/My\ Drive/darknet/certificate_dataset/test.txt
-names = /content/gdrive/My\ Drive/darknet/certificate_dataset/classes.names
+train = /content/gdrive/My Drive/darknet/certificate_dataset/train.txt
+valid = /content/gdrive/My Drive/darknet/certificate_dataset/test.txt
+names = /content/gdrive/My Drive/darknet/certificate_dataset/classes.names
 backup = backup

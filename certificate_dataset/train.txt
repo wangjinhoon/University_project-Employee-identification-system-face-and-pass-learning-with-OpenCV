@@ -1,4 +1,4 @@
-/content/gdrive/My Drive/darknet/certificate_dataset/5.jpg
+/content/gdrive/My Drive/darknet/certificate_dataset/4.jpg
 /content/gdrive/My Drive/darknet/certificate_dataset/7.jpg
 /content/gdrive/My Drive/darknet/certificate_dataset/6.jpg
 /content/gdrive/My Drive/darknet/certificate_dataset/2.jpg
@@ -53,7 +53,6 @@
 /content/gdrive/My Drive/darknet/certificate_dataset/57.jpg
 /content/gdrive/My Drive/darknet/certificate_dataset/58.jpg
 /content/gdrive/My Drive/darknet/certificate_dataset/59.jpg
-/content/gdrive/My Drive/darknet/certificate_dataset/60.jpg
 /content/gdrive/My Drive/darknet/certificate_dataset/61.jpg
 /content/gdrive/My Drive/darknet/certificate_dataset/62.jpg
 /content/gdrive/My Drive/darknet/certificate_dataset/63.jpg
@@ -73,7 +72,6 @@
 /content/gdrive/My Drive/darknet/certificate_dataset/77.jpg
 /content/gdrive/My Drive/darknet/certificate_dataset/78.jpg
 /content/gdrive/My Drive/darknet/certificate_dataset/79.jpg
-/content/gdrive/My Drive/darknet/certificate_dataset/80.jpg
 /content/gdrive/My Drive/darknet/certificate_dataset/81.jpg
 /content/gdrive/My Drive/darknet/certificate_dataset/82.jpg
 /content/gdrive/My Drive/darknet/certificate_dataset/83.jpg
@@ -93,7 +91,6 @@
 /content/gdrive/My Drive/darknet/certificate_dataset/97.jpg
 /content/gdrive/My Drive/darknet/certificate_dataset/98.jpg
 /content/gdrive/My Drive/darknet/certificate_dataset/99.jpg
-/content/gdrive/My Drive/darknet/certificate_dataset/100.jpg
 /content/gdrive/My Drive/darknet/certificate_dataset/101.jpg
 /content/gdrive/My Drive/darknet/certificate_dataset/102.jpg
 /content/gdrive/My Drive/darknet/certificate_dataset/103.jpg
@@ -113,4 +110,12 @@
 /content/gdrive/My Drive/darknet/certificate_dataset/117.jpg
 /content/gdrive/My Drive/darknet/certificate_dataset/118.jpg
 /content/gdrive/My Drive/darknet/certificate_dataset/119.jpg
-/content/gdrive/My Drive/darknet/certificate_dataset/120.jpg
+/content/gdrive/My Drive/darknet/certificate_dataset/121.jpg
+/content/gdrive/My Drive/darknet/certificate_dataset/122.jpg
+/content/gdrive/My Drive/darknet/certificate_dataset/123.jpg
+/content/gdrive/My Drive/darknet/certificate_dataset/124.jpg
+/content/gdrive/My Drive/darknet/certificate_dataset/125.jpg
+/content/gdrive/My Drive/darknet/certificate_dataset/126.jpg
+/content/gdrive/My Drive/darknet/certificate_dataset/127.jpg
+/content/gdrive/My Drive/darknet/certificate_dataset/128.jpg
+/content/gdrive/My Drive/darknet/certificate_dataset/129.jpg

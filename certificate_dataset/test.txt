@@ -1,5 +1,9 @@
-/content/gdrive/My Drive/darknet/certificate_dataset/4.jpg
+/content/gdrive/My Drive/darknet/certificate_dataset/5.jpg
 /content/gdrive/My Drive/darknet/certificate_dataset/14.jpg
 /content/gdrive/My Drive/darknet/certificate_dataset/24.jpg
 /content/gdrive/My Drive/darknet/certificate_dataset/34.jpg
-
+/content/gdrive/My Drive/darknet/certificate_dataset/60.jpg
+/content/gdrive/My Drive/darknet/certificate_dataset/80.jpg
+/content/gdrive/My Drive/darknet/certificate_dataset/100.jpg
+/content/gdrive/My Drive/darknet/certificate_dataset/120.jpg
+/content/gdrive/My Drive/darknet/certificate_dataset/130.jpg
