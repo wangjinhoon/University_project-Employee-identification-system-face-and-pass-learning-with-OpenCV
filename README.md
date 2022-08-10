@@ -3,6 +3,7 @@
 ### 사용 기술 스택 : Python, face_recognition, Yolo3, tracking
 ### 사용할 툴 : face_recognition, yolov3, OpenCV
 ### 사용 언어 : Python
+### 기간 : 2021.02 ~ 2021.11
 -------
 ### 내용
 카메라를 통한 얼굴과 출입증을 인식하여 사람을 식별, 트래킹 하게됩니다.
