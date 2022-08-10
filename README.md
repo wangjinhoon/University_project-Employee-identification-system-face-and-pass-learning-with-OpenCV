@@ -14,5 +14,5 @@
 ![image](./2.jpg)
 
 
-[관련 Notion 링크](https://tasteful-dianella-4f4.notion.site/c9c65178a7924578b213029bd4d4550a)  
+[자세한 내용 Notion 링크](https://tasteful-dianella-4f4.notion.site/c9c65178a7924578b213029bd4d4550a)  
 [관련 영상 링크](https://youtu.be/BhmaxMiq5X8)
