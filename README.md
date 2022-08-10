@@ -1,6 +1,9 @@
 # object_detection
 
 ### 사용 기술 스택 : Python, face_recognition, Yolo3, tracking
+
+![image](./1.jpg)
+
 학교에서 진행한 자동화 프로젝트 입니다. 
 카메라를 통한 얼굴과 출입증을 인식하여 사람을 식별, 트래킹 하게됩니다.
 
