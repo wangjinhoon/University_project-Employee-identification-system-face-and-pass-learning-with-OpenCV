@@ -1,7 +1,7 @@
 # object_detection
 
 ### 사용 기술 스택 : Python, face_recognition, Yolo3, tracking
-### 사용할 툴 : face_recognition, yolov3, colab
+### 사용할 툴 : face_recognition, yolov3, OpenCV
 ### 사용 언어 : Python
 -------
 ### 내용
